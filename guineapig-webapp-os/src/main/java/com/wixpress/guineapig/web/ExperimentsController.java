@@ -63,12 +63,7 @@ public class ExperimentsController extends BaseController {
         }
     }
 
-    @RequestMapping(
-            value = "/Experiments",
-            method = {RequestMethod.POST},
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
-            )
+    @RequestMapping(value = "/Experiments", method = {RequestMethod.POST})
     @ResponseBody
     public GuineapigResult newExperiment(@RequestBody final UiExperiment uiExperiment, final HttpSession session) throws Exception {
         try {
@@ -79,7 +74,7 @@ public class ExperimentsController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/Experiment/{experimentId}", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(value = "/Experiment/{experimentId}", method = {RequestMethod.PUT})
     @ResponseBody
     public GuineapigResult updateExperiment(@RequestBody final UiExperiment uiExperiment, final HttpSession session) throws Exception {
         try {
@@ -91,12 +86,10 @@ public class ExperimentsController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/Experiment/{experimentId}/terminate", method = {RequestMethod.POST})
+    @RequestMapping(value = "/Experiment/{experimentId}/terminate", method = {RequestMethod.POST}, consumes = {"text/plain"})
     @ResponseBody
     public GuineapigResult terminateExperiment(
-            @PathVariable("experimentId") final int experimentId,
-            @RequestBody final String comment,
-            final HttpSession session) throws Exception {
+            @PathVariable("experimentId") final int experimentId, @RequestBody final String comment,final HttpSession session) throws Exception {
         try {
             Experiment experiment = experimentService.getExperimentById(experimentId);
             List<Experiment> allExperiments = experimentService.getAllExperiments();
@@ -109,13 +102,13 @@ public class ExperimentsController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/Experiment/{experimentId}/pause", method = {RequestMethod.POST})
+    @RequestMapping(value = "/Experiment/{experimentId}/pause", method = {RequestMethod.POST}, consumes = {"text/plain"})
     @ResponseBody
     public GuineapigResult pauseExperiment(@PathVariable("experimentId") final int experimentId, @RequestBody final String comment, final HttpSession session) throws Exception {
         return success(experimentService.pauseExperiment(experimentId, comment, getUser(session).getEmail()));
     }
 
-    @RequestMapping(value = "/Experiment/{experimentId}/resume", method = {RequestMethod.POST})
+    @RequestMapping(value = "/Experiment/{experimentId}/resume", method = {RequestMethod.POST}, consumes = {"text/plain"})
     @ResponseBody
     public GuineapigResult resumeExperiment(@PathVariable("experimentId") final int experimentId, @RequestBody final String comment, final HttpSession session) throws Exception {
         return success(experimentService.resumeExperiment(experimentId, comment, getUser(session).getEmail()));

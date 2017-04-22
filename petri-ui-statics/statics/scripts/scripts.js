@@ -134,14 +134,14 @@ angular.module('uiPetriServices', ['ngResource', 'ng'])
     });
 
     Experiment.restStop = $resource(api.stopExperiment, {}, {
-      stop: { method: 'POST', params: {experimentId: '@experimentId'} }
+      stop: { method: 'POST', headers: {'Content-Type': 'text/plain'}, params: {experimentId: '@experimentId'} }
     });
 
     Experiment.restPause = $resource(api.pauseExperiment, {}, {
-      pause: { method: 'POST', params: {experimentId: '@experimentId'} }
+      pause: { method: 'POST', headers: {'Content-Type': 'text/plain'}, params: {experimentId: '@experimentId'} }
     });
     Experiment.restResume = $resource(api.resumeExperiment, {}, {
-      resume: { method: 'POST', params: {experimentId: '@experimentId'} }
+      resume: { method: 'POST', headers: {'Content-Type': 'text/plain'}, params: {experimentId: '@experimentId'} }
     });
     Experiment.restExperimentSkeleton = $resource(api.experimentSkeleton);
     Experiment.restExperimentHistory = $resource(api.history, {}, {

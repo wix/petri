@@ -64,7 +64,7 @@ class ExperimentsControllerIT extends SpecificationWithEnvSupport {
       postExperiment(id)
 
       val comment = "terminate reason"
-      val terminateRes = httpDriver.post(s"$url/Experiment/$id/terminate", comment)
+      val terminateRes = httpDriver.postText(s"$url/Experiment/$id/terminate", comment)
       terminateRes.getSuccess must beTrue
 
       checkExperimentContains(experimentId = id, "\"state\":\"ended\"", s"""comment":"$comment""")
@@ -75,7 +75,7 @@ class ExperimentsControllerIT extends SpecificationWithEnvSupport {
       postExperiment(id)
 
       val comment = "pause reason"
-      val pauseRes = httpDriver.post(s"$url/Experiment/$id/pause", comment)
+      val pauseRes = httpDriver.postText(s"$url/Experiment/$id/pause", comment)
       pauseRes.getSuccess must beTrue
 
       checkExperimentContains(experimentId = id, "\"paused\":true", s"""comment":"$comment""")
@@ -87,7 +87,7 @@ class ExperimentsControllerIT extends SpecificationWithEnvSupport {
       httpDriver.post(s"$url/Experiment/$id/pause", "pause reason")
 
       val comment = "resume reason"
-      val resumeRes = httpDriver.post(s"$url/Experiment/$id/resume", comment)
+      val resumeRes = httpDriver.postText(s"$url/Experiment/$id/resume", comment)
       resumeRes.getSuccess must beTrue
 
       checkExperimentContains(experimentId = id, "\"paused\":false", s"""comment":"$comment""")
